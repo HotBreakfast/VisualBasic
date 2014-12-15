@@ -49,24 +49,19 @@ Public Class Form1
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
         AxWindowsMediaPlayer2.URL = ListBox1.SelectedItem.ToString
         AxWindowsMediaPlayer2.Ctlcontrols.play()
-        Dim id3tag As New ID3TagLibrary.MP3File(ListBox1.SelectedItem.ToString)
         Try
             UltraID3.Read(ListBox1.SelectedItem.ToString)
             pics = UltraID3.ID3v2Tag.Frames.GetFrames(CommonMultipleInstanceID3v2FrameTypes.Picture)
             Panel1.BackgroundImage = CType(pics.Item(0), ID3v22PictureFrame).Picture
 
         Catch ex As Exception
-            Try
 
-                Panel1.BackgroundImage = id3tag.Tag2.Artwork(1)
-            Catch
+                Panel1.BackgroundImage = My.Resources(IMAGE IN RESOURCES)
 
-                Panel1.BackgroundImage = My.Resources.note
-            End Try
         End Try
-        Label1.Text = id3tag.Title
-        Label2.Text = id3tag.Album
-        Label3.Text = id3tag.Artist
+        Label1.Text = UltraID3.Title
+        Label2.Text = UltraID3.Album
+        Label3.Text = UltraID3.Artist
 
     End Sub
 
